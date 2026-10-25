@@ -1,7 +1,3 @@
-permissions:
-  contents: write
-  issues: write
-  
 name: PaperClaw Manual Pipeline
 
 on:
@@ -36,6 +32,10 @@ on:
 concurrency:
   group: paperclaw-academic-api-clients
   cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
 
 jobs:
   operate:
