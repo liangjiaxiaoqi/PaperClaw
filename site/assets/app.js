@@ -1,11 +1,10 @@
 const state = { papers: [], reports: [], directions: [], visible: 12, query: "", category: "", topic: "", date: "" };
 const el = (id) => document.getElementById(id);
 const researchDirections = [
-  "多模态视觉学习",
-  "多视角与多目标感知",
-  "无人机视觉",
-  "免训练开放集分割",
-  "工业异常检测",
+  "VLM与VLA",
+  "无人水面艇（USV）",
+  "多模态视觉感知",
+  "脑电信号（EEG）",
   "拓展阅读"
 ];
 
