@@ -1,10 +1,102 @@
 {
-  "version": "2026-09-09",
-  "classification_note": "规则基于标题、摘要和日报概括生成可重叠标签，不代表逐篇质量评分。显著/伪装目标检测属于任务分组，不能据此推断输入必为多模态。",
+  "version": "2026-10-25",
+  "classification_note": "规则基于标题、摘要和日报概括生成可重叠标签，涵盖VLM/VLA、USV、多模态感知与EEG方向。",
   "directions": [
     {
+      "id": "vlm-vla",
+      "name": "VLM与VLA",
+      "all_of": [
+        "(?:\\b(?:VLM|VLMs|VLA|VLAs|Vision-Language-Action|Vision-Language Model|MLLM|Embodied AI)\\b|视觉语言动作|视觉语言模型|具身智能|多模态大模型)",
+        "(?:\\b(?:robot|robotic|manipulation|policy|action|trajectory|embodied|agent|planning|control)\\b|机器人|操作|策略|动作|轨迹|具身|智能体|规划|控制)"
+      ],
+      "topics": [
+        {
+          "id": "vla-paradigms",
+          "name": "VLA 动作生成范式",
+          "keywords": [
+            "discrete action token",
+            "flow matching VLA",
+            "diffusion policy",
+            "world model robot"
+          ],
+          "pattern": "discrete action|action token|flow matching|diffusion policy|world model|动作标记|流匹配|扩散策略|世界模型"
+        },
+        {
+          "id": "vlm-arch",
+          "name": "VLM/VLA 架构与高效适配",
+          "keywords": [
+            "end-to-end VLA",
+            "hierarchical VLA",
+            "parameter-efficient",
+            "visual token pruning"
+          ],
+          "pattern": "end-to-end|hierarchical|parameter-efficient|adapter|token prun|端到端|分层|高效微调|token剪枝"
+        },
+        {
+          "id": "vla-generalization",
+          "name": "跨本体与泛化",
+          "keywords": [
+            "cross-embodiment",
+            "sim-to-real",
+            "zero-shot manipulation"
+          ],
+          "pattern": "cross-embodiment|sim-to-real|zero-shot|generaliz|跨本体|仿真到现实|零样本|泛化"
+        }
+      ]
+    },
+    {
+      "id": "usv",
+      "name": "无人水面艇（USV）",
+      "all_of": [
+        "(?:\\b(?:USV|USVs|ASV|Autonomous Surface Vessel|Unmanned Surface Vehicle|maritime|surface vessel|surface vehicle)\\b|无人艇|无人船|水面无人|水面舰艇|水面航行器)",
+        "(?:\\b(?:perception|navigation|control|path planning|tracking|detection|SLAM|collision avoidance|autonomous)\\b|感知|导航|控制|路径规划|跟踪|检测|建图|避障|自主)"
+      ],
+      "topics": [
+        {
+          "id": "usv-perception",
+          "name": "USV 感知与环境理解",
+          "keywords": [
+            "maritime object detection",
+            "water surface segmentation",
+            "USV visual perception"
+          ],
+          "pattern": "detect|segment|perception|vision|检测|分割|感知|视觉|目标识别"
+        },
+        {
+          "id": "usv-navigation",
+          "name": "USV 导航与路径规划",
+          "keywords": [
+            "USV path planning",
+            "collision avoidance",
+            "maritime navigation"
+          ],
+          "pattern": "path planning|navigation|collision avoid|trajectory|路径规划|导航|避障|轨迹"
+        },
+        {
+          "id": "usv-control",
+          "name": "USV 控制与多艇协同",
+          "keywords": [
+            "USV control",
+            "multi-USV cooperation",
+            "swarm"
+          ],
+          "pattern": "control|cooperat|swarm|formation|控制|协同|集群|编队"
+        },
+        {
+          "id": "usv-ad-cross",
+          "name": "自动驾驶技术跨界迁移（方案B）",
+          "keywords": [
+            "BEV perception for USV",
+            "end-to-end driving transfer",
+            "autonomous driving adaptation"
+          ],
+          "pattern": "BEV|bird.?s.eye|end-to-end driving|autonomous driving|自动驾驶|端到端驾驶|鸟瞰图"
+        }
+      ]
+    },
+    {
       "id": "multimodal",
-      "name": "多模态视觉学习",
+      "name": "多模态视觉感知",
       "all_of": [
         "(?:\\b(?:multimodal|multi-modal|cross-modal|cross-spectral|multi-sensor|multisensor|vision[- ]language|visual[- ]language|VLMs?|MLLMs?|text[- ](?:image|guided)|RGB[-+ ](?:TIR|T|D|NIR|IR|X|thermal|depth|event)|RGB[- ]to[- ]IR|audio[- ]visual|salient object detection|camouflaged? object (?:detection|segmentation)|concealed object detection)\\b|多模态|跨模态|跨光谱|多传感器|视觉语言|文本引导|显著目标检测|伪装目标|隐蔽目标|伪装.{0,6}(?:车辆|物体).{0,3}(?:检测|分割)|camouflaged? (?:vehicle|military vehicle) (?:detection|segmentation)|(?:camera.{0,15}(?:LiDAR|radar)|(?:LiDAR|radar).{0,15}camera))|\\binstruction[- ]driven image editing\\b|文本指令",
         "(?:\\b(?:visual|vision|image|imagery|video|camera|detection|tracking|segmentation|perception|SLAM|reconstruction|localization|navigation)\\b|视觉|图像|影像|检测|跟踪|分割|感知|定位|建图|重建)"
@@ -69,282 +161,45 @@
             "multimodal tracking"
           ],
           "pattern": "(?:\\b(?:multimodal|multi-modal|cross-modal|RGB[-+ ](?:TIR|T|D|IR|NIR|thermal|depth|event))\\b.{0,100}\\b(?:detection|segmentation|tracking)\\b|(?:多模态|跨模态).{0,40}(?:检测|分割|跟踪))"
-        },
-        {
-          "id": "mm-vlm",
-          "name": "视觉语言模型与高效适配",
-          "keywords": [
-            "VLM / MLLM",
-            "visual grounding",
-            "parameter-efficient adaptation / visual token pruning"
-          ],
-          "pattern": "vision[- ]language|visual[- ]language|\\b(?:VLMs?|MLLMs?|CLIP)\\b|visual (?:grounding|token)|视觉语言|视觉定位|token剪枝|高效适配"
         }
       ]
     },
     {
-      "id": "multiview",
-      "name": "多视角与多目标感知",
+      "id": "eeg",
+      "name": "脑电信号（EEG）",
       "all_of": [
-        "(?:\\b(?:multi[- ]view|multiview|multi[- ]camera|cross[- ]camera|cross[- ]view|multi[- ]object tracking|multiple object tracking|multi[- ]target tracking|re[- ]identification|ReID|MTMC|MOT)\\b|多视角|多视图|多相机|跨相机|跨视角|多目标跟踪|重识别|再识别)|\\bstereo\\b|\\bmulti[- ]fisheye\\b|双目|多参考相对位姿|multi[- ]relative pose|多个(?:过去)?关键帧",
-        "(?:\\b(?:visual|vision|image|imagery|video|camera|detection|tracking|segmentation|perception|SLAM|reconstruction|localization|navigation)\\b|视觉|图像|影像|检测|跟踪|分割|感知|定位|建图|重建)"
+        "(?:\\b(?:EEG|electroencephalogram|electroencephalography|BCI|brain-computer interface|neural signal|brain signal)\\b|脑电|脑机接口|神经信号|脑信号)",
+        "(?:\\b(?:classification|decoding|detection|recognition|representation|learning|signal processing|emotion|motor imagery|SSVEP)\\b|分类|解码|检测|识别|表征|学习|信号处理|情绪|运动想象)"
       ],
       "topics": [
         {
-          "id": "mv-mot",
-          "name": "多目标跟踪",
+          "id": "eeg-decoding",
+          "name": "EEG 信号解码与表征学习",
           "keywords": [
-            "MOT",
-            "multi-object tracking",
-            "multi-target tracking"
+            "EEG decoding",
+            "EEG representation learning",
+            "self-supervised EEG"
           ],
-          "pattern": "multi[- ](?:object|target) tracking|multiple object tracking|\\bMOT\\b|多目标跟踪"
+          "pattern": "decod|representation learning|self-supervised|feature extract|解码|表征学习|自监督|特征提取"
         },
         {
-          "id": "mv-mtmc",
-          "name": "多相机与跨相机跟踪",
+          "id": "eeg-bci",
+          "name": "脑机接口应用",
           "keywords": [
-            "MTMC",
-            "multi-camera tracking",
-            "cross-camera association"
+            "motor imagery",
+            "SSVEP",
+            "EEG emotion recognition"
           ],
-          "pattern": "multi[- ]camera|cross[- ]camera|\\bMTMC\\b|多相机|跨相机"
+          "pattern": "motor imagery|SSVEP|emotion|BCI application|运动想象|情绪识别|脑机接口应用"
         },
         {
-          "id": "mv-reid",
-          "name": "跨视角匹配与重识别",
+          "id": "eeg-multimodal",
+          "name": "EEG 与多模态融合",
           "keywords": [
-            "cross-view matching",
-            "ReID",
-            "person / vehicle re-identification"
+            "EEG-fMRI",
+            "EEG-visual fusion"
           ],
-          "pattern": "cross[- ]view|re[- ]identification|\\bReID\\b|跨视角|重识别|再识别"
-        },
-        {
-          "id": "mv-geometry",
-          "name": "多视角几何与三维感知",
-          "keywords": [
-            "multi-view reconstruction",
-            "multi-view stereo",
-            "point cloud registration"
-          ],
-          "pattern": "reconstruction|stereo|point cloud|3D|重建|点云|三维|立体"
-        },
-        {
-          "id": "mv-temporal",
-          "name": "时空关联与鲁棒感知",
-          "keywords": [
-            "data association",
-            "occlusion",
-            "identity / temporal consistency"
-          ],
-          "pattern": "association|occlusion|consistency|temporal|robust|关联|遮挡|时空|一致性|鲁棒"
-        }
-      ]
-    },
-    {
-      "id": "uav",
-      "name": "无人机视觉",
-      "all_of": [
-        "(?:\\b(?:UAVs?|UAS|drones?|unmanned aerial vehicles?|aerial|low[- ]altitude)\\b|无人机|航拍|低空|多机协同)",
-        "(?:\\b(?:visual|vision|image|imagery|video|camera|detection|tracking|segmentation|perception|SLAM|reconstruction|localization|navigation)\\b|视觉|图像|影像|检测|跟踪|分割|感知|定位|建图|重建)"
-      ],
-      "topics": [
-        {
-          "id": "uav-detection",
-          "name": "航拍目标检测",
-          "keywords": [
-            "UAV / aerial detection",
-            "small / tiny object",
-            "oriented detection"
-          ],
-          "pattern": "detect(?:ion)?|检测"
-        },
-        {
-          "id": "uav-segmentation",
-          "name": "航拍分割与场景理解",
-          "keywords": [
-            "aerial segmentation",
-            "UAV scene understanding"
-          ],
-          "pattern": "segment|scene understanding|分割|场景理解"
-        },
-        {
-          "id": "uav-tracking",
-          "name": "跟踪与跨视角检索",
-          "keywords": [
-            "UAV tracking",
-            "drone ReID",
-            "drone-ground matching"
-          ],
-          "pattern": "track|ReID|re-identification|cross-view|跟踪|重识别|跨视角|检索"
-        },
-        {
-          "id": "uav-navigation",
-          "name": "视觉定位、导航与建图",
-          "keywords": [
-            "visual localization / navigation",
-            "SLAM",
-            "3D reconstruction"
-          ],
-          "pattern": "localization|navigation|SLAM|mapping|reconstruction|定位|导航|建图|重建"
-        },
-        {
-          "id": "uav-cooperative",
-          "name": "多机协同感知",
-          "keywords": [
-            "multi-UAV perception",
-            "cooperative perception"
-          ],
-          "pattern": "multi[- ](?:UAV|drone)|cooperat|swarm|formation|多机|多无人机|协同|编队"
-        },
-        {
-          "id": "uav-robust",
-          "name": "多模态与复杂环境感知",
-          "keywords": [
-            "RGB-thermal UAV",
-            "low-light / fog",
-            "cross-domain adaptation"
-          ],
-          "pattern": "multimodal|RGB[- ]|thermal|infrared|fog|low-light|domain|多模态|红外|低照|雾|跨域|域偏移"
-        }
-      ]
-    },
-    {
-      "id": "training-free",
-      "name": "免训练开放集分割",
-      "all_of": [
-        "(?:\\btraining[- ]free\\b|\\b(?:without|no) (?:any )?(?:re[- ]training|fine[- ]tuning|downstream training)\\b|\\b(?:do not|don't) retrain\\b|免训练|无需(?:重新)?训练|无需微调|无需重训练|不需要(?:下游)?训练)",
-        "(?:\\b(?:open[- ](?:vocabulary|set|world)|zero[- ]shot)\\b|开放词汇|开放集|开放世界|零样本)",
-        "(?:\\bsegment(?:ation|er|ing)?\\b|分割)"
-      ],
-      "topics": [
-        {
-          "id": "tf-vocabulary",
-          "name": "免训练开放词汇分割",
-          "keywords": [
-            "training-free open-vocabulary segmentation"
-          ],
-          "pattern": "open[- ]vocabulary|开放词汇"
-        },
-        {
-          "id": "tf-openset",
-          "name": "免训练开放集／开放世界分割",
-          "keywords": [
-            "training-free open-set segmentation",
-            "training-free open-world segmentation"
-          ],
-          "pattern": "open[- ](?:set|world)|开放集|开放世界"
-        },
-        {
-          "id": "tf-foundation",
-          "name": "冻结基础模型的分割推理",
-          "keywords": [
-            "frozen CLIP / DINO / SAM",
-            "training-free inference"
-          ],
-          "pattern": "\\b(?:CLIP|DINOv?\\d*|SAM|frozen|foundation)\\b|基础模型|冻结"
-        },
-        {
-          "id": "tf-boundary",
-          "name": "空间与边界细化",
-          "keywords": [
-            "dense features",
-            "attention refinement",
-            "boundary refinement"
-          ],
-          "pattern": "dense|spatial|boundary|attention|空间|边界|细化|稠密|注意力"
-        },
-        {
-          "id": "tf-context",
-          "name": "上下文、原型与类别校准",
-          "keywords": [
-            "context reasoning",
-            "prototype",
-            "class calibration"
-          ],
-          "pattern": "context|prototype|calibration|上下文|原型|校准"
-        },
-        {
-          "id": "tf-domain",
-          "name": "跨域与遥感扩展",
-          "keywords": [
-            "remote sensing",
-            "aerial / UAV",
-            "cross-domain segmentation"
-          ],
-          "pattern": "remote sensing|aerial|UAV|domain|遥感|航拍|无人机|跨域"
-        }
-      ]
-    },
-    {
-      "id": "industrial-anomaly",
-      "name": "工业异常检测",
-      "all_of": [
-        "(?:\\b(?:industrial|manufactur(?:ing|ed)?|factory|production[- ]line|quality inspection|visual inspection|machine vision|surface defect|product defect|component defect|MVTec(?: AD| LOCO| 3D-AD)?|BTAD|MPDD|Real-IAD)\\b|工业|制造业|工厂|产线|质检|质量检测|视觉检测|机器视觉|表面缺陷|产品缺陷|零部件缺陷)",
-        "(?:\\b(?:anomal(?:y|ies|ous)|defects?|faults?)\\b.{0,30}\\b(?:detect(?:ion)?|locali[sz](?:ation|ing)?|segment(?:ation|ing)?|inspect(?:ion|ing)?|classif(?:ication|ying))\\b|\\b(?:detect(?:ion)?|locali[sz](?:ation|ing)?|segment(?:ation|ing)?|inspect(?:ion|ing)?|classif(?:ication|ying))\\b.{0,30}\\b(?:anomal(?:y|ies|ous)|defects?|faults?)\\b|异常.{0,12}(?:检测|定位|分割|识别)|缺陷.{0,12}(?:检测|定位|分割|识别)|(?:检测|定位|分割|识别).{0,12}(?:异常|缺陷))",
-        "(?:\\b(?:visual|vision|image|imagery|video|camera|pixel|point[- ]cloud|RGB|depth|3D|detection|localization|segmentation|inspection)\\b|视觉|图像|影像|视频|相机|像素|点云|深度|三维|检测|定位|分割)"
-      ],
-      "topics": [
-        {
-          "id": "iad-detection",
-          "name": "工业视觉异常检测与定位",
-          "keywords": [
-            "industrial anomaly detection",
-            "visual anomaly localization",
-            "MVTec AD / VisA"
-          ],
-          "pattern": "industrial anomaly|visual anomaly|anomaly (?:detection|localization|segmentation)|MVTec(?: AD)?|Real-IAD|工业异常|视觉异常|异常(?:检测|定位|分割)"
-        },
-        {
-          "id": "iad-defect",
-          "name": "表面缺陷检测与分割",
-          "keywords": [
-            "surface defect detection",
-            "defect segmentation",
-            "quality inspection"
-          ],
-          "pattern": "surface defect|product defect|component defect|defect (?:detection|localization|segmentation|inspection)|表面缺陷|产品缺陷|零部件缺陷|缺陷(?:检测|定位|分割)|质检"
-        },
-        {
-          "id": "iad-generalization",
-          "name": "小样本、零样本与泛化",
-          "keywords": [
-            "few-shot anomaly detection",
-            "zero-shot anomaly detection",
-            "domain-generalized inspection"
-          ],
-          "pattern": "few[- ]shot|zero[- ]shot|one[- ]class|open[- ]set|open[- ]vocabulary|domain general|cross[- ]domain|小样本|少样本|零样本|单类|开放集|开放词汇|域泛化|跨域"
-        },
-        {
-          "id": "iad-logical",
-          "name": "逻辑与结构异常",
-          "keywords": [
-            "logical anomaly",
-            "structural anomaly",
-            "assembly inspection"
-          ],
-          "pattern": "logical anomal|structural anomal|assembly (?:anomaly|inspection|verification)|MVTec LOCO|逻辑异常|结构异常|装配(?:异常|检测|检查)"
-        },
-        {
-          "id": "iad-multimodal-3d",
-          "name": "多模态与三维异常检测",
-          "keywords": [
-            "RGB-D anomaly detection",
-            "3D anomaly detection",
-            "point-cloud inspection"
-          ],
-          "pattern": "multimodal|multi-modal|RGB[-+ ]?D|3D anomal|point[- ]cloud|depth|MVTec 3D|多模态|三维异常|点云|深度"
-        },
-        {
-          "id": "iad-foundation-synthesis",
-          "name": "基础模型与合成异常",
-          "keywords": [
-            "VLM / foundation model",
-            "synthetic anomaly generation",
-            "diffusion-based anomaly synthesis"
-          ],
-          "pattern": "foundation model|vision[- ]language|\\b(?:VLM|CLIP|DINO|SAM)\\b|synthetic anomal|anomaly synth|diffusion|基础模型|视觉语言|合成异常|异常生成|扩散模型"
+          "pattern": "EEG.{0,20}(?:fMRI|visual|image|multimodal)|多模态.{0,20}EEG|脑电.{0,20}融合"
         }
       ]
     },
@@ -353,14 +208,14 @@
       "name": "拓展阅读",
       "fallback_only": true,
       "all_of": [
-        "(?:\\b(?:visual|vision|image|imagery|video|detection|tracking|segmentation|perception|reconstruction|mapping)\\b|视觉|图像|影像|视频|检测|跟踪|分割|感知|重建|建图)"
+        "(?:\\b(?:visual|vision|image|video|robot|autonomous|signal|learning)\\b|视觉|图像|视频|机器人|自主|信号|学习)"
       ],
       "topics": [],
       "any_of": [
-        "\\b(?:LiDAR|radar|point[- ]cloud)\\b|3D (?:object|ship) detection|激光雷达|点云|纯雷达|三维.{0,6}检测",
-        "domain (?:generalization|adaptation|shift)|corruption|synthetic data augmentation|跨域泛化|域泛化|域偏移|合成数据增强|损坏.{0,15}鲁棒",
-        "(?:satellite|remote[- ]sensing|multispectral|hyperspectral).{0,80}(?:segmentation|detection)|(?:segmentation|detection).{0,80}(?:satellite|remote[- ]sensing|multispectral|hyperspectral)|(?:卫星|遥感|多光谱|高光谱).{0,60}(?:分割|检测)",
-        "(?:3D|spatial|geometr\\w*|world[- ]consistent|octree).{0,70}(?:memory|mapping|world model|video generation)|(?:video generation|world model).{0,70}(?:3D|spatial|geometr\\w*|octree)|(?:三维|3D|空间).{0,30}(?:记忆|世界模型|视频生成)|世界一致"
+        "\\b(?:reinforcement learning|imitation learning)\\b|强化学习|模仿学习",
+        "\\b(?:foundation model|large language model|LLM)\\b|基础模型|大语言模型",
+        "domain (?:generalization|adaptation)|跨域泛化|域泛化|域偏移",
+        "(?:autonomous driving|self-driving|traffic scene|vehicle detection|ego-vehicle).{0,50}(?:perception|planning|control|BEV)|(?:自动驾驶|智能网联汽车|交通场景|车辆检测).{0,50}(?:感知|规划|控制|鸟瞰图)"
       ]
     }
   ]
