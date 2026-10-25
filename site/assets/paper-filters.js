@@ -3,7 +3,7 @@ const PaperClawFilters = {
   categories(paper) {
     if (Array.isArray(paper.categories)) return paper.categories;
     // Compatibility with a briefly cached old dataset during deployment.
-    const category = paper.category === "多模态显著目标检测" ? "多模态视觉学习" : paper.category;
+    const category = paper.category === "多模态显著目标检测" ? "多模态视觉感知" : paper.category;
     return category && category !== "待归类" ? [category] : [];
   },
   topics(directions, category = "") {
