@@ -18,7 +18,7 @@ from services.report_status import REPORT_MARKER, daily_encouragement, read_run_
 REPORTS_DIR = ROOT / "daily_reports"
 ISSUE_INDEX_PATH = ROOT / "papers" / "issue_index.json"
 SITE_SOURCE_DIR = ROOT / "site"
-REPO_URL = "https://github.com/zitalk/PaperClaw"
+REPO_URL = "https://github.com/liangjiaxiaoqi/PaperClaw"
 ISSUE_URL_PREFIX = f"{REPO_URL}/issues/"
 
 _ORGANIZATION_SCORES = (
