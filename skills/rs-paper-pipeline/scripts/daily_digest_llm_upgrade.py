@@ -172,7 +172,7 @@ def main(target_date: str | None = None, stats_json: str | None = None, incremen
         papers = _augment_papers_from_stats(repo, paper_by_date.get(date, []), stats)
         previous_issue = digest_issue_by_date.get(date)
         previous_body = (getattr(previous_issue, "body", None) or issue_data(previous_issue).get("body", "")) if previous_issue else ""
-        repo_name = getattr(CONFIG, "github_repo", "zitalk/PaperClaw")
+        repo_name = getattr(CONFIG, "github_repo", "liangjiaxiaoqi/PaperClaw")
         previous = retain_previous_papers(repo, issues, previous_body, date, repo_name) if incremental else []
         previous_ids = {_paper_key(p) for p in previous}
         new_count = len({_paper_key(p) for p in papers} - previous_ids)
