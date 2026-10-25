@@ -5,7 +5,7 @@ import json
 import re
 from datetime import datetime, timedelta, timezone
 
-REPORT_MARKER = "<!-- paperclaw-report: zitalk/PaperClaw -->"
+REPORT_MARKER = "<!-- paperclaw-report: liangjiaxiaoqi/PaperClaw -->"
 
 
 def read_run_status(body: str) -> dict:
